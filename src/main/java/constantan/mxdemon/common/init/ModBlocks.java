@@ -1,6 +1,6 @@
 package constantan.mxdemon.common.init;
 
-import constantan.mxdemon.common.TestGeneratorBlock;
+import constantan.mxdemon.common.block.TestGeneratorBlock;
 import constantan.mxdemon.lib.LibMisc;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

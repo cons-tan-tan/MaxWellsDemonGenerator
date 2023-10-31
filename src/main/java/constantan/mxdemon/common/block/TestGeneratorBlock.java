@@ -1,4 +1,4 @@
-package constantan.mxdemon.common;
+package constantan.mxdemon.common.block;
 
 import constantan.mxdemon.common.block.entity.TestGeneratorBlockEntity;
 import constantan.mxdemon.common.init.ModBlockEntities;
