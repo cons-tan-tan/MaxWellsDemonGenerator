@@ -1,5 +1,6 @@
 package constantan.mxdemon.common;
 
+import constantan.mxdemon.common.init.ModBlockEntities;
 import constantan.mxdemon.common.init.ModBlocks;
 import constantan.mxdemon.common.init.ModItems;
 import constantan.mxdemon.lib.LibMisc;
@@ -23,6 +24,7 @@ public class ModSetup {
         modEventBus.addListener(ModSetup::init);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
     }
 
     public static void init(final FMLCommonSetupEvent event) {
