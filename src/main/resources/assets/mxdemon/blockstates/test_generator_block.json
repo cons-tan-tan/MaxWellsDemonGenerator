@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "mxdemon:block/test_generator_block"
+    }
+  }
+}
