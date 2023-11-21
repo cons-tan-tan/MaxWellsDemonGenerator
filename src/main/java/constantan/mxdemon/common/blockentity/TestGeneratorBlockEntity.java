@@ -45,6 +45,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
     public @NotNull Component getDisplayName() {
         return new TextComponent("Test Generator");
     }
+    //todo langファイルの名前を参照させる
 
     @Nullable
     @Override
