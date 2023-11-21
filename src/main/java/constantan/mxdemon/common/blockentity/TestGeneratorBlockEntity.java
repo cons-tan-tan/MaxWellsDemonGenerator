@@ -1,5 +1,6 @@
-package constantan.mxdemon.common.block.entity;
+package constantan.mxdemon.common.blockentity;
 
+import constantan.mxdemon.common.container.TestGeneratorMenu;
 import constantan.mxdemon.common.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,7 +49,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
-        return null;
+        return new TestGeneratorMenu(pContainerId, pPlayerInventory, this);
     }
 
     @Nonnull

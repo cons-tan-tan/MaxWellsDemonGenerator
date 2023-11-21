@@ -1,6 +1,6 @@
 package constantan.mxdemon.common.init;
 
-import constantan.mxdemon.common.block.entity.TestGeneratorBlockEntity;
+import constantan.mxdemon.common.blockentity.TestGeneratorBlockEntity;
 import constantan.mxdemon.lib.LibMisc;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
