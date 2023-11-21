@@ -1,6 +1,6 @@
 package constantan.mxdemon.common.block;
 
-import constantan.mxdemon.common.block.entity.TestGeneratorBlockEntity;
+import constantan.mxdemon.common.blockentity.TestGeneratorBlockEntity;
 import constantan.mxdemon.common.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
