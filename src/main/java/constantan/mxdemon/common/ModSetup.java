@@ -4,6 +4,7 @@ import constantan.mxdemon.common.init.ModBlockEntities;
 import constantan.mxdemon.common.init.ModBlocks;
 import constantan.mxdemon.common.init.ModItems;
 import constantan.mxdemon.common.init.ModMenuTypes;
+import constantan.mxdemon.common.network.Messages;
 import constantan.mxdemon.lib.LibMisc;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -30,5 +31,6 @@ public class ModSetup {
     }
 
     public static void init(final FMLCommonSetupEvent event) {
+        Messages.register();
     }
 }

@@ -3,6 +3,8 @@ package constantan.mxdemon.common.blockentity;
 import constantan.mxdemon.common.container.TestGeneratorMenu;
 import constantan.mxdemon.common.init.ModBlockEntities;
 import constantan.mxdemon.common.init.ModItems;
+import constantan.mxdemon.common.network.Messages;
+import constantan.mxdemon.common.network.packet.EnergySyncS2CPacket;
 import constantan.mxdemon.common.util.ModEnergyStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,7 +45,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
         @Override
         public void onEnergyChanged() {
             setChanged();
-            //todo 同期メソッド
+            Messages.sendToClients(new EnergySyncS2CPacket(this.energy, getBlockPos()));
         }
     };
 
@@ -63,6 +65,14 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new TestGeneratorMenu(pContainerId, pPlayerInventory, this);
+    }
+
+    public IEnergyStorage getEnergyStorage() {
+        return ENERGY_STORAGE;
+    }
+
+    public void setEnergyLevel(int energy) {
+        ENERGY_STORAGE.setEnergy(energy);
     }
 
     @Nonnull

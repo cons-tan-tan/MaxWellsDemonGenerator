@@ -38,6 +38,10 @@ public class TestGeneratorMenu extends AbstractContainerMenu {
         });
     }
 
+    public TestGeneratorBlockEntity getBlockEntity() {
+        return blockEntity;
+    }
+
 
     // CREDIT GOES TO: diesieben07 | https://github.com/diesieben07/SevenCommons
     // must assign a slot number to each of the slots used by the GUI.
