@@ -1,6 +1,6 @@
 package constantan.mxdemon.client;
 
-import constantan.mxdemon.client.gui.TestGeneratorScreen;
+import constantan.mxdemon.client.renderer.gui.TestGeneratorScreen;
 import constantan.mxdemon.common.init.ModBlocks;
 import constantan.mxdemon.common.init.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;

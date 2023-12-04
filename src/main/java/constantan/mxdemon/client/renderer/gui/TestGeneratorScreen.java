@@ -1,4 +1,4 @@
-package constantan.mxdemon.client.gui;
+package constantan.mxdemon.client.renderer.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
