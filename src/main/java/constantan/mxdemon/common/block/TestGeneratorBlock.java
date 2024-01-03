@@ -55,8 +55,9 @@ public class TestGeneratorBlock extends BaseEntityBlock {
                                           @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pPos);
-            if(entity instanceof TestGeneratorBlockEntity) {
-                NetworkHooks.openGui(((ServerPlayer)pPlayer), (TestGeneratorBlockEntity)entity, pPos);
+            if(entity instanceof TestGeneratorBlockEntity testGeneratorBlockEntity) {
+                testGeneratorBlockEntity.syncClientEnergy((ServerPlayer) pPlayer);// クライアント側のエネルギーを同期
+                NetworkHooks.openGui((ServerPlayer) pPlayer, (TestGeneratorBlockEntity) entity, pPos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }

@@ -11,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -45,7 +46,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
         @Override
         public void onEnergyChanged() {
             setChanged();
-            Messages.sendToClients(new EnergySyncS2CPacket(this.energy, getBlockPos()));
+            // GUI以外でクライアント同期させたい場合はここに処理を書く
         }
     };
 
@@ -58,7 +59,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
 
     @Override
     public @NotNull Component getDisplayName() {
-        return new TextComponent("Test Generator");//todo langファイルの名前を参照させる
+        return new TextComponent("Test Generator");// todo langファイルの名前を参照させる
     }
 
     @Nullable
@@ -134,6 +135,10 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
         if (hasDemonInSlot(pBlockEntity)) {
             pBlockEntity.ENERGY_STORAGE.receiveEnergy(64, false);
         }
+    }
+
+    public void syncClientEnergy(ServerPlayer player) {
+        Messages.sendToPlayer(new EnergySyncS2CPacket(ENERGY_STORAGE.getEnergyStored(), getBlockPos()), player);
     }
 
     private static boolean hasDemonInSlot(TestGeneratorBlockEntity pBlockEntity) {
