@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 @Mod(LibMisc.MOD_ID)
 public class MaxwellsDemonGenerator {
-    public static Logger logger = LoggerFactory.getLogger(LibMisc.MOD_NAME);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LibMisc.MOD_NAME);
 
     public MaxwellsDemonGenerator() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
