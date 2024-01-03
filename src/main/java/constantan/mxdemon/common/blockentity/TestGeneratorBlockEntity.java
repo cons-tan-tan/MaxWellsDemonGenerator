@@ -25,6 +25,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -32,7 +35,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
+@Mod.EventBusSubscriber(bus= Mod.EventBusSubscriber.Bus.FORGE)
 public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
 
@@ -46,12 +53,19 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
         @Override
         public void onEnergyChanged() {
             setChanged();
-            // GUI以外でクライアント同期させたい場合はここに処理を書く
+            usingMenuPlayerUUIDSet.forEach(uuid -> {
+                Player player = getLevel().getPlayerByUUID(uuid);
+                if (player != null) {
+                    syncClientEnergy((ServerPlayer) player);
+                }
+            });
         }
     };
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
     private LazyOptional<IEnergyStorage> lazyEnergyHandler = LazyOptional.empty();
+
+    private final Set<UUID> usingMenuPlayerUUIDSet = new HashSet<>();
 
     public TestGeneratorBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.TEST_GENERATOR_ENTITY.get(), pPos, pBlockState);
@@ -132,7 +146,7 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
             return;
         }
 
-        if (hasDemonInSlot(pBlockEntity)) {
+        if (pBlockEntity.hasDemonInSlot()) {
             pBlockEntity.ENERGY_STORAGE.receiveEnergy(64, false);
         }
     }
@@ -141,7 +155,23 @@ public class TestGeneratorBlockEntity extends BlockEntity implements MenuProvide
         Messages.sendToPlayer(new EnergySyncS2CPacket(ENERGY_STORAGE.getEnergyStored(), getBlockPos()), player);
     }
 
-    private static boolean hasDemonInSlot(TestGeneratorBlockEntity pBlockEntity) {
-        return pBlockEntity.itemHandler.getStackInSlot(0).getItem() == ModItems.TEST_DEMON.get();
+    private boolean hasDemonInSlot() {
+        return this.itemHandler.getStackInSlot(0).getItem() == ModItems.TEST_DEMON.get();
+    }
+
+    @SubscribeEvent
+    public static void onMenuOpened(PlayerContainerEvent.Open event) {
+        if (event.getContainer() instanceof TestGeneratorMenu testGeneratorMenu) {
+            UUID playerUUID = event.getPlayer().getUUID();
+            testGeneratorMenu.getBlockEntity().usingMenuPlayerUUIDSet.add(playerUUID);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMenuClosed(PlayerContainerEvent.Close event) {
+        if (event.getContainer() instanceof TestGeneratorMenu testGeneratorMenu) {
+            UUID playerUUID = event.getPlayer().getUUID();
+            testGeneratorMenu.getBlockEntity().usingMenuPlayerUUIDSet.remove(playerUUID);
+        }
     }
 }
